@@ -1,0 +1,19 @@
+types:
+  Market:
+    fields: [id, name]
+  Instrument:
+    fields: [id, symbol, base, quote]
+  Candle:
+    fields: [timestamp, open, high, low, close, volume]
+  Feature:
+    fields: [name, value, timestamp]
+  Prediction:
+    fields: [timestamp, horizon, probability, direction, model]
+  Context:
+    fields: [timestamp, state, explanation, confidence]
+  Outcome:
+    fields: [timestamp, actual_return, direction]
+  Experiment:
+    fields: [id, hypothesis, model, parameters, result]
+  Journal:
+    fields: [timestamp, intuition, prediction, context, decision, outcome]
