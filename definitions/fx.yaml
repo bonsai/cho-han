@@ -1,0 +1,13 @@
+definitions:
+  Market: "価格が形成される市場"
+  Instrument: "観測対象となる金融商品"
+  Observation: "その時点までに利用可能な市場情報"
+  Feature: "Observationから計算された分析変数"
+  Prediction: "ObservationとFeatureから未来について推定した結果"
+  Context: "Predictionを市場状態との関係で解釈したもの"
+  DecisionContext: "行動を検討するために整理されたContext"
+  Outcome: "Predictionの対象期間が終了した後に観測された結果"
+  Intuition: "人間が市場観測から素早く形成した仮説"
+  Hypothesis: "検証可能な形にしたIntuition"
+  Experiment: "Hypothesisをデータで検証する手続き"
+  Tool: "観測・予測・記録・検証を支援するシステム"
