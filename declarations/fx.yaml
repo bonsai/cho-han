@@ -1,0 +1,14 @@
+declarations:
+  temporal_integrity:
+    future_leakage: prohibited
+    train_validation_test: chronological
+  roles:
+    CSV: observation
+    BQML: prediction
+    JEV: contextual_analysis
+    Backtest: validation
+  research:
+    core_loop: "observe -> predict -> contextualize -> validate -> learn"
+    design_rule: "荒く作る -> 絞る -> 検証する"
+  trading:
+    auto_ordering: excluded
