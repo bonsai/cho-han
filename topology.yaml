@@ -1,0 +1,117 @@
+topology:
+  id: cho-han-fx
+  label: "cho-han FX research topology"
+
+  flow:
+    - observation
+    - feature
+    - prediction
+    - context
+    - decision
+    - validation
+    - outcome
+    - learning
+    - observation
+
+  nodes:
+    market:
+      type: Market
+      next: [observation]
+
+    observation:
+      type: Observation
+      inputs: [market, time]
+      next: [feature, intuition]
+
+    feature:
+      type: Feature
+      inputs: [observation]
+      next: [prediction, context]
+
+    intuition:
+      type: Intuition
+      inputs: [observation]
+      next: [hypothesis, journal]
+
+    hypothesis:
+      type: Hypothesis
+      inputs: [intuition]
+      next: [experiment]
+
+    experiment:
+      type: Experiment
+      inputs: [hypothesis, tool]
+      next: [prediction, validation]
+
+    prediction:
+      type: Prediction
+      producer: BQML
+      inputs: [feature]
+      next: [context, validation]
+
+    context:
+      type: JEVAnalysis
+      inputs: [prediction, observation, feature]
+      next: [decision, journal]
+
+    decision:
+      type: DecisionContext
+      inputs: [context]
+      next: [validation, journal]
+
+    validation:
+      type: Backtest
+      inputs: [prediction, decision, historical_data]
+      next: [outcome]
+
+    outcome:
+      type: Outcome
+      inputs: [actual_market_data]
+      next: [learning, journal]
+
+    learning:
+      type: Learning
+      inputs: [prediction, context, outcome, journal]
+      next: [hypothesis, feature, model, observation]
+
+    journal:
+      type: Record
+      inputs: [intuition, prediction, context, decision, outcome]
+      next: [learning]
+
+    model:
+      type: BQMLModel
+      next: [prediction]
+
+    tool:
+      type: Tool
+      supports:
+        - observation
+        - feature
+        - prediction
+        - context
+        - validation
+        - journal
+
+  layers:
+    L1_market:
+      nodes: [market, time]
+    L2_observation:
+      nodes: [observation, candle, volume]
+    L3_feature:
+      nodes: [feature, trend, momentum, volatility, level]
+    L4_prediction:
+      nodes: [model, prediction, horizon]
+    L5_context:
+      nodes: [context, decision]
+    L6_validation:
+      nodes: [validation, outcome]
+    L7_learning:
+      nodes: [intuition, hypothesis, experiment, learning, journal]
+
+  core_loop: "observe -> predict -> contextualize -> decide -> validate -> learn -> observe"
+  research_loop: "intuition -> hypothesis -> experiment -> result -> learning -> hypothesis"
+  design_rule: "荒く作る -> 絞る -> 検証する"
+  constraint:
+    future_leakage: false
+    auto_ordering: false
