@@ -1,0 +1,65 @@
+ontology:
+  id: cho-han-fx
+  label: "USD/JPY × BQML × JEV"
+  purpose: "FXを観測・予測・文脈化・検証する研究世界"
+
+classes:
+  World: {description: "研究対象としてのFX世界"}
+  Market: {parent: World, description: "市場"}
+  Instrument: {parent: Market, description: "取引対象"}
+  CurrencyPair: {parent: Instrument}
+  USDJPY: {parent: CurrencyPair, label: "USD/JPY"}
+  Observation: {parent: World, description: "ある時点で観測された市場状態"}
+  Candle: {parent: Observation, description: "OHLC(V)による時間足"}
+  Feature: {parent: Observation, description: "観測から生成した特徴量"}
+  Trend: {parent: Observation}
+  Momentum: {parent: Observation}
+  Volatility: {parent: Observation}
+  Support: {parent: Observation}
+  Resistance: {parent: Observation}
+  Prediction: {description: "BQMLによる未来の推定"}
+  PredictionProbability: {parent: Prediction}
+  DirectionPrediction: {parent: Prediction}
+  Horizon: {description: "予測する未来までの時間"}
+  Model: {description: "予測に使用するモデル"}
+  BQMLModel: {parent: Model}
+  Context: {description: "予測を読むための市場文脈"}
+  JEVAnalysis: {parent: Context, description: "JEVによる予測と観測状態の文脈化"}
+  DecisionContext: {parent: Context, description: "行動を検討するための整理された情報"}
+  Backtest: {description: "過去データによる再現実験"}
+  Outcome: {description: "予測後に実際に観測された結果"}
+  Experiment: {description: "仮説を検証する単位"}
+  Intuition: {description: "人間が感じた市場の仮説・勘"}
+  Hypothesis: {description: "検証可能な仮説"}
+  Tool: {description: "観測・予測・記録・検証を支援する道具"}
+  Journal: {description: "予測・判断・感情・結果の記録"}
+
+relations:
+  observes: {domain: Tool, range: Observation}
+  contains: {domain: Candle, range: Feature}
+  describes: {domain: Feature, range: Observation}
+  generates: {domain: BQMLModel, range: Prediction}
+  predicts: {domain: Prediction, range: Horizon}
+  usesModel: {domain: Prediction, range: Model}
+  contextualizes: {domain: JEVAnalysis, range: Prediction}
+  usesObservation: {domain: JEVAnalysis, range: Observation}
+  produces: {domain: JEVAnalysis, range: DecisionContext}
+  validates: {domain: Backtest, range: Prediction}
+  comparesWith: {domain: Backtest, range: Outcome}
+  records: {domain: Journal, range: Prediction}
+  recordsOutcome: {domain: Journal, range: Outcome}
+  recordsIntuition: {domain: Journal, range: Intuition}
+  becomes: {domain: Intuition, range: Hypothesis}
+  tests: {domain: Experiment, range: Hypothesis}
+  uses: {domain: Experiment, range: Tool}
+  observesMarket: {domain: Observation, range: Market}
+  targets: {domain: Prediction, range: Instrument}
+  hasContext: {domain: DecisionContext, range: Observation}
+
+instances:
+  market: {class: Market, label: "FX Market"}
+  instrument: {class: USDJPY, label: "USD/JPY"}
+  primary_horizon: {class: Horizon, label: "15m"}
+  model: {class: BQMLModel, label: "BQML direction model"}
+  analysis: {class: JEVAnalysis, label: "JEV market-context analysis"}
+  research_loop: {class: Experiment, label: "荒く作る → 絞る → 検証する"}
