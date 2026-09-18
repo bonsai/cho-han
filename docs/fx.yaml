@@ -1,0 +1,20 @@
+document:
+  project: cho-han
+  subject: "USD/JPY × BQML × JEV"
+  documents:
+    ontology: ../ontology.yaml
+    taxonomy: ../taxonomy.yaml
+    topology: ../topology.yaml
+  architecture:
+    input: data/usdjpy_15m.csv
+    prediction: BQML
+    context: JEV
+    validation: backtest
+  research_cycle:
+    - observation
+    - feature
+    - prediction
+    - context
+    - validation
+    - outcome
+    - learning
